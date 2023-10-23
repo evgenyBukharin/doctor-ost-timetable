@@ -8,7 +8,9 @@
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "simplebar-vue": "^2.3.3",
     "vue": "^3.2.13",
+    "vue-simple-scrollbar": "^0.1.8",
     "vuex": "^4.0.0"
   },
   "devDependencies": {
