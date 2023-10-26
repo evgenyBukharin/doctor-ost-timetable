@@ -111,6 +111,8 @@ export default {
         visibility: hidden;
         transition: opacity 0.3s ease, visibility 0.3s ease;
         max-height: 335px;
+        z-index: 10;
+        background: var(--white-color);
         &-visible {
             opacity: 1;
             visibility: visible;

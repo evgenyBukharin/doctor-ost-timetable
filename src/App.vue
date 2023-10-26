@@ -4,6 +4,7 @@
             <Header></Header>
             <div class="timetable__flex">
                 <TimetableColumn />
+                <Table />
             </div>
         </div>
     </div>
@@ -12,10 +13,11 @@
 <script>
 import Header from './components/Header.vue';
 import TimetableColumn from './components/TimetableColumn.vue';
+import Table from './components/Table.vue';
 
 export default {
     name: 'App',
-    components: { Header, TimetableColumn },
+    components: { Header, TimetableColumn, Table },
 };
 </script>
 
@@ -35,7 +37,9 @@ html {
     --dark-grey-color: #ececec;
     --black-color: #000;
     --blue-color: #299b9c;
+    --light-blue-color: #30e3e4;
     --orange-color: #e15335;
+    --table-border-color: #78787833;
 }
 body {
     background: var(--grey-color);
@@ -47,6 +51,7 @@ body {
 .timetable {
     &__container {
         max-width: 1440px;
+        // max-width: 652px;
         margin: 0 auto;
         padding: 0 20px;
         padding-top: 80px;
@@ -56,6 +61,10 @@ body {
         border-radius: 25px;
         padding: 50px;
         padding-bottom: 41px;
+    }
+    &__flex {
+        display: flex;
+        gap: 15px;
     }
 }
 .list-reset {

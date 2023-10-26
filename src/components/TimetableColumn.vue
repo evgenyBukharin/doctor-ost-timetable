@@ -54,6 +54,7 @@ export default {
     border: 1px solid var(--blue-color);
     padding: 20px 40px 20px 20px;
     max-width: 350px;
+    width: 100%;
     &__list {
         display: grid;
         grid-template-columns: repeat(6, 1fr);

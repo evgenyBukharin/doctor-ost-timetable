@@ -18,7 +18,7 @@ export default createStore({
         ],
         currentCity: 'Екатеринбург',
         currentFillialToggler: 'ДокторОст',
-        currentPeriod: '7',
+        currentPeriod: 14,
         doctorsList: [
             {
                 title: 'Кузина Оксана Владимировна',
@@ -100,6 +100,69 @@ export default createStore({
             },
         ],
         activeItemIndex: null,
+        currentTimetable: [
+            {
+                time: '8:00',
+                days: ['24.10.2023', '01.11.2023', '29.10.2023'],
+            },
+            {
+                time: '9:00',
+                days: ['25.10.2023', '26.10.2023', '28.10.2023', '13.10.2023'],
+            },
+            {
+                time: '10:00',
+                days: ['30.10.2023', '31.10.2023', '28.10.2023'],
+            },
+            {
+                time: '11:00',
+                days: ['05.11.2023', '07.11.2023', '28.10.2023'],
+            },
+            {
+                time: '12:00',
+                days: ['25.10.2023', '26.10.2023', '28.10.2023'],
+            },
+            {
+                time: '13:00',
+                days: ['25.10.2023', '26.10.2023', '28.10.2023'],
+            },
+            {
+                time: '14:00',
+                days: ['30.10.2023', '03.11.2023', '28.10.2023'],
+            },
+            {
+                time: '15:00',
+                days: ['25.10.2023', '26.10.2023', '04.11.2023'],
+            },
+            {
+                time: '16:00',
+                days: ['25.10.2023', '26.10.2023', '28.10.2023'],
+            },
+            {
+                time: '17:00',
+                days: ['02.11.2023', '26.10.2023', '04.11.2023'],
+            },
+            {
+                time: '18:00',
+                days: ['31.10.2023', '26.10.2023', '28.10.2023', '10.11.2023'],
+            },
+            {
+                time: '19:00',
+                days: ['25.10.2023', '26.10.2023', '28.10.2023'],
+            },
+            {
+                time: '20:00',
+                days: ['31.10.2023', '26.10.2023', '04.11.2023'],
+            },
+            {
+                time: '21:00',
+                days: ['31.10.2023', '26.10.2023', '28.10.2023'],
+            },
+            {
+                time: '22:00',
+                days: ['31.10.2023', '26.10.2023', '04.11.2023'],
+            },
+        ],
+        userSelectedCells: [],
     },
     getters: {},
     mutations: {
@@ -111,6 +174,18 @@ export default createStore({
         },
         changeActiveItemIndex(state, idx) {
             state.activeItemIndex = idx;
+        },
+        addUserSelectedCell(state, cell) {
+            state.userSelectedCells.push(cell);
+        },
+        removeUserSelectedCell(state, clickedCell) {
+            let index = state.userSelectedCells.findIndex((cell) => {
+                return cell.time == clickedCell.time && cell.day == clickedCell.day;
+            });
+            state.userSelectedCells.splice(index, 1);
+        },
+        setNewVisiblePeriod(state, array) {
+            state.visiblePeriod = array;
         },
     },
     actions: {},

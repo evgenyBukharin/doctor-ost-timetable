@@ -34,7 +34,7 @@ export default {
     name: 'PeriodToggler',
     data() {
         return {
-            isItemActive: false,
+            isItemActive: true,
         };
     },
     methods: {
