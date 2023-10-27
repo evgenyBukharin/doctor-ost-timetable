@@ -1,7 +1,7 @@
 <template>
     <div class="custom-select">
         <div class="custom-select__container" @click="toggleList">
-            <div class="custom-select__value">{{ currentValue }}</div>
+            <div class="custom-select__value">{{ $store.state.currentCity }}</div>
             <img
                 src="../assets/img/triangle.svg"
                 alt="Треугольник"
@@ -24,7 +24,9 @@
             }"
         >
             <ul class="list-reset custom-select__list">
-                <li class="custom-select__item" v-for="(value, idx) in valuesList" :key="value + idx">{{ value }}</li>
+                <li class="custom-select__item" v-for="(value, idx) in valuesList" :key="value + idx" @click="updateCurrentCity(value)">
+                    {{ value }}
+                </li>
             </ul>
         </simplebar>
     </div>
@@ -53,6 +55,10 @@ export default {
     methods: {
         toggleList() {
             this.isListVisible = !this.isListVisible;
+        },
+        updateCurrentCity(value) {
+            this.$store.commit('updateCurrentCity', value);
+            this.isListVisible = false;
         },
     },
 };
@@ -92,6 +98,7 @@ export default {
         background: var(--white-color);
         text-align: center;
         border-radius: 8px;
+        cursor: pointer;
         &:last-child {
             margin-bottom: 1px;
         }
@@ -110,7 +117,7 @@ export default {
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.3s ease, visibility 0.3s ease;
-        max-height: 335px;
+        max-height: 337px;
         z-index: 10;
         background: var(--white-color);
         &-visible {

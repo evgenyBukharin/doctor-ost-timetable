@@ -6,6 +6,15 @@
                 <TimetableColumn />
                 <Table />
             </div>
+            <div class="timetable__container-button">
+                <DoneButton />
+            </div>
+            <div
+                class="timetable__mask"
+                :class="{
+                    'timetable__mask-disabled': $store.state.isDoctorsListLoaded,
+                }"
+            ></div>
         </div>
     </div>
 </template>
@@ -14,10 +23,14 @@
 import Header from './components/Header.vue';
 import TimetableColumn from './components/TimetableColumn.vue';
 import Table from './components/Table.vue';
+import DoneButton from './components/DoneButton.vue';
 
 export default {
     name: 'App',
-    components: { Header, TimetableColumn, Table },
+    components: { Header, TimetableColumn, Table, DoneButton },
+    mounted() {
+        this.$store.dispatch('loadDoctorsList');
+    },
 };
 </script>
 
@@ -55,8 +68,14 @@ body {
         margin: 0 auto;
         padding: 0 20px;
         padding-top: 80px;
+        &-button {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
     }
     &__content {
+        position: relative;
         background: var(--white-color);
         border-radius: 25px;
         padding: 50px;
@@ -65,6 +84,18 @@ body {
     &__flex {
         display: flex;
         gap: 15px;
+    }
+    &__mask {
+        position: absolute;
+        inset: 0;
+        z-index: 25;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 25px;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        &-disabled {
+            opacity: 0;
+            visibility: hidden;
+        }
     }
 }
 .list-reset {

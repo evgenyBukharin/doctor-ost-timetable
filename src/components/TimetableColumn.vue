@@ -35,13 +35,14 @@ export default {
     name: 'TimetableColumn',
     components: { simplebar },
     methods: {
-        toggleActivity(event, index) {
+        toggleActivity(event, index, item) {
             if (this.$store.state.activeItemIndex !== index) {
                 if (this.$store.state.activeItemIndex !== null) {
                     document.getElementById('item' + this.$store.state.activeItemIndex).classList.remove('timetableColumn__item-active');
                 }
                 event.target.classList.add('timetableColumn__item-active');
                 this.$store.commit('changeActiveItemIndex', index);
+                this.$store.dispatch('loadTimetable', item);
             }
         },
     },

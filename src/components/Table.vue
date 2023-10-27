@@ -1,5 +1,10 @@
 <template>
-    <div class="table">
+    <div
+        class="table"
+        :class="{
+            'table-disabled': $store.state.isTimetableLoaded !== true,
+        }"
+    >
         <div class="table__row table__row-header">
             <div class="table__cell table__cell-time table__cell-time-empty"></div>
             <div
@@ -29,6 +34,27 @@
                 v-for="(isBronned, idx) in getTimetableRows(row.days, row.time)"
                 @click="selectCell($event.target, isBronned.status, { time: row.time, day: $store.state.visiblePeriod[idx].date })"
             ></div>
+        </div>
+        <div
+            class="table__banner"
+            :class="{
+                'table__banner-hidden': $store.state.isTimetableLoaded == true,
+            }"
+        >
+            <h4
+                class="table__text-banner"
+                :class="{
+                    'table__text-banner-hidden': $store.state.isTimetableLoaded == 'pending',
+                }"
+            >
+                Выберите сотрудника или кабинет
+            </h4>
+            <span
+                class="table__loader"
+                :class="{
+                    'table__loader-visible': $store.state.isTimetableLoaded == 'pending',
+                }"
+            ></span>
         </div>
     </div>
 </template>
@@ -109,7 +135,6 @@ export default {
             document.querySelectorAll('.table__cell-day-selected').forEach((cell) => {
                 cell.classList.remove('table__cell-day-selected');
             });
-
             const classList = event.target.classList;
             if (classList.contains('table__cell-button-reversed')) {
                 // next period
@@ -138,9 +163,16 @@ export default {
 
 <style scoped lang="scss">
 .table {
+    position: relative;
     border: 1px solid var(--blue-color);
     border-radius: 10px;
     width: 100%;
+    &-disabled {
+        & .table__row {
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
     &__container {
         &-cell {
             display: flex;
@@ -245,6 +277,59 @@ export default {
         }
         &-weekday {
             font-size: 13px;
+        }
+        &-banner {
+            margin: 0;
+            color: var(--white-color);
+            text-align: center;
+            font-size: 28px;
+            font-weight: 500;
+            line-height: 39px;
+            &-hidden {
+                display: none;
+            }
+        }
+    }
+    &__banner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 400px;
+        height: 250px;
+        display: flex;
+        padding: 0px 26px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        background: var(--blue-color);
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        z-index: 20;
+        &-hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+    }
+    &__loader {
+        display: none;
+        width: 48px;
+        height: 48px;
+        border: 5px solid #fff;
+        border-bottom-color: transparent;
+        border-radius: 50%;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+        &-visible {
+            display: inline-block;
+        }
+
+        @keyframes rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
         }
     }
 }
