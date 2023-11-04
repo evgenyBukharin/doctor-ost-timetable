@@ -162,8 +162,23 @@ export default createStore({
     actions: {
         loadTimetable({ state, commit }, item) {
             // get dev ver
+            // axios
+            //     .get(`https://b24-ost.ru/telephoneWidget/webhooks/timeTable.php`)
+            //     .then((r) => r.data)
+            //     .then((timetable) => {
+            //         commit('setNewTimetable', timetable);
+            //         commit('updateIsTimetableLoaded', true);
+            //     })
+            //     .catch((error) => {
+            //         console.log(error);
+            //     });
+            // post prod ver
             axios
-                .get(`http://localhost:3000/timetable`)
+                .post('https://b24-ost.ru/telephoneWidget/webhooks/timeTable.php', {
+                    clickedItem: item,
+                    currentCity: state.currentCity,
+                    currentFilial: state.currentFillialToggler,
+                })
                 .then((r) => r.data)
                 .then((timetable) => {
                     commit('setNewTimetable', timetable);
@@ -172,24 +187,10 @@ export default createStore({
                 .catch((error) => {
                     console.log(error);
                 });
-            // post prod ver
-            // axios
-            //     .post('http://timetablelink', {
-            //         clickedItem: item,
-            //         currentCity: state.currentCity,
-            //         currentFilial: state.currentFillialToggler,
-            //     })
-            //     .then((timetable) => {
-            //         commit('setNewTimetable', timetable);
-            //         commit('updateIsTimetableLoaded', true);
-            //     })
-            //     .catch((error) => {
-            //         console.log(error);
-            //     });
         },
         loadDoctorsList({ commit }) {
             axios
-                .get(`http://localhost:3000/doctorsList`)
+                .get(`https://b24-ost.ru/telephoneWidget/webhooks/dataPacient.php`)
                 .then((r) => r.data)
                 .then((list) => {
                     commit('setNewDoctorsList', list);
